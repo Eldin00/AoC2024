@@ -1,21 +1,20 @@
 use std::{
     fs::File,
-    io::{BufRead, BufReader}
+    io::{BufRead, BufReader},
 };
 
 pub fn start() {
     let file = File::open("./input/day_1.txt").unwrap();
     let reader = BufReader::new(file);
     let mut lines: Vec<String> = vec![];
-    for l in reader.lines(){
+    for l in reader.lines() {
         let temp = l.unwrap();
         lines.push(temp);
     }
     part_1(lines);
-    
 }
 
-fn part_1(input: Vec<String>){
+fn part_1(input: Vec<String>) {
     let mut list1: Vec<u32> = vec![];
     let mut list2: Vec<u32> = vec![];
     let mut result: u32 = 0;
@@ -29,7 +28,7 @@ fn part_1(input: Vec<String>){
     list1.sort();
     list2.sort();
 
-    for i in 0 .. list1.len() {
+    for i in 0..list1.len() {
         result += list1[i].abs_diff(list2[i]);
     }
 
@@ -38,7 +37,9 @@ fn part_1(input: Vec<String>){
     part_2(list1, list2);
 }
 
-fn part_2(list1: Vec<u32>, list2: Vec<u32>){
-    let result = list1.iter().fold(0,|acc: u32, x| acc + (x * list2.iter().filter(|&n| *n == *x).count() as u32));
+fn part_2(list1: Vec<u32>, list2: Vec<u32>) {
+    let result = list1.iter().fold(0, |acc: u32, x| {
+        acc + (x * list2.iter().filter(|&n| *n == *x).count() as u32)
+    });
     println!("{result}");
 }
