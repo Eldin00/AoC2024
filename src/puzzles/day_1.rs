@@ -9,9 +9,9 @@ pub fn start() {
     let mut lines: Vec<String> = vec![];
     for l in reader.lines(){
         let temp = l.unwrap();
-        lines.push(String::from(temp));
+        lines.push(temp);
     }
-    part_1(lines.clone());
+    part_1(lines);
     
 }
 
