@@ -49,7 +49,7 @@ fn safe_test(list: Vec<u32>) -> bool {
             return false;
         }
     }
-    return true;
+    true
 }
 
 fn safe_test2(mut list: Vec<u32>, secondary: bool) -> bool {
@@ -68,5 +68,5 @@ fn safe_test2(mut list: Vec<u32>, secondary: bool) -> bool {
             return safe_test2(list_copy, true) || safe_test2(list, true);
         }
     }
-    return true;
+    true
 }
