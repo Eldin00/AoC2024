@@ -59,6 +59,14 @@ fn safe_test2(mut list: Vec<u32>) -> bool {
             || list[i].abs_diff(list[i - 1]) > 3
             || list[i] == list[i - 1]
         {
+            if i == 2 && (list[i - 1] < list[i]) != ascending {
+                let mut list_copy_1 = list.clone();
+                let mut list_copy_2 = list.clone();
+                _ = list_copy_1.remove(i);
+                _ = list_copy_2.remove(i-1); 
+                _ = list.remove(0);
+                return safe_test(list_copy_1) || safe_test(list_copy_2) || safe_test(list);
+            }
             let mut list_copy = list.clone();
             _ = list_copy.remove(i);
             _ = list.remove(i - 1);
