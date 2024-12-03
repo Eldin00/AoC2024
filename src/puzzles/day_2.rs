@@ -59,6 +59,9 @@ fn safe_test2(mut list: Vec<u32>) -> bool {
             || list[i].abs_diff(list[i - 1]) > 3
             || list[i] == list[i - 1]
         {
+            // It's possible that if the direction switches at the 2nd value in the list that removing the head of the list will fix 
+            // it, but removing the 2nd and 3rd values (the pair that failed) will not. In all other cases only the 2 values from the
+            // first pair to fail need to be checked.
             if i == 2 && (list[i - 1] < list[i]) != ascending {
                 let mut list_copy_1 = list.clone();
                 let mut list_copy_2 = list.clone();
