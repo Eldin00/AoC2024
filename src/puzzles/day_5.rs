@@ -6,6 +6,7 @@ use std::{
 };
 
 pub fn start() {
+    let start = std::time::Instant::now();
     let mut rules: HashMap<u8, Vec<u8>> = HashMap::new();
     let mut jobs: Vec<Vec<u8>> = vec![];
     let file = File::open("./input/day_5.txt").unwrap();
@@ -32,6 +33,7 @@ pub fn start() {
         }
     }
     part_1(rules, jobs);
+    println!("Time: {:?}", start.elapsed());
 }
 
 fn part_1(rules: HashMap<u8, Vec<u8>>, jobs: Vec<Vec<u8>>) {

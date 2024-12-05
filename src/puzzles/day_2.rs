@@ -1,9 +1,10 @@
 use std::{
     fs::File,
-    io::{BufRead, BufReader},
+    io::{BufRead, BufReader}
 };
 
 pub fn start() {
+    let start = std::time::Instant::now();
     let file = File::open("./input/day_2.txt").unwrap();
     let reader = BufReader::new(file);
     let mut lines: Vec<String> = vec![];
@@ -13,6 +14,7 @@ pub fn start() {
     }
     part_1(lines.clone());
     part_2(lines);
+    println!("Time: {:?}", start.elapsed());
 }
 
 fn part_1(lines: Vec<String>) {
