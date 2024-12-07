@@ -20,8 +20,7 @@ pub fn start() {
 fn part_1(lines: Vec<String>) {
     let mut safe_count: u32 = 0;
     for l in lines {
-        let vs: Vec<&str> = l.as_str().split_whitespace().collect();
-        let vi: Vec<u32> = vs.iter().map(|x| x.parse::<u32>().unwrap()).collect();
+        let vi: Vec<u32> = l.as_str().split_whitespace().map(|x| x.parse::<u32>().unwrap()).collect();
         if safe_test(vi) {
             safe_count += 1;
         }
@@ -32,8 +31,7 @@ fn part_1(lines: Vec<String>) {
 fn part_2(lines: Vec<String>) {
     let mut safe_count: u32 = 0;
     for l in lines {
-        let vs: Vec<&str> = l.as_str().split_whitespace().collect();
-        let vi: Vec<u32> = vs.iter().map(|x| x.parse::<u32>().unwrap()).collect();
+        let vi: Vec<u32> = l.as_str().split_whitespace().map(|x| x.parse::<u32>().unwrap()).collect();
         if safe_test2(vi) {
             safe_count += 1;
         }
