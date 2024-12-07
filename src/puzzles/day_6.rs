@@ -66,6 +66,7 @@ fn part_2(mut map: Vec<Vec<bool>>, start: &(usize, usize)) {
 }
 
 //for debugging
+#[allow(dead_code)]
 fn print_map(map: &Vec<Vec<bool>>) {
     for a in map {
         for b in a {
