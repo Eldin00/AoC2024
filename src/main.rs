@@ -1,7 +1,7 @@
 mod puzzles;
 
 fn main() {
-    let full_run = true;
+    let full_run = false;
     if full_run {
         println!("Day 1 solutions:");
         puzzles::day_1::start();
@@ -11,8 +11,10 @@ fn main() {
         puzzles::day_3::start();
         println!("Day 4 solutions:");
         puzzles::day_4::start();
-            }
-    println!("Day 5 solutions:");
-    puzzles::day_5::start();
+        println!("Day 5 solutions:");
+        puzzles::day_5::start();
+                }
+    println!("Day 6 solutions:");
+    puzzles::day_6::start();
 
 }
