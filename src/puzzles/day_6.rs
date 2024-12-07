@@ -32,16 +32,16 @@ fn part_1(map: &Vec<Vec<bool>>, start_loc: &(usize, usize)) {
     };
     while guard.step(&map) { }
     println!("{:?}", guard.visited.keys().len());
-    part_2(map.clone(), start_loc)
+    part_2(map.clone(), start_loc, guard.visited)
 }
 
 // not happy with this brute force solution, but it worked.
-fn part_2(mut map: Vec<Vec<bool>>, start: &(usize, usize)) {
+fn part_2(mut map: Vec<Vec<bool>>, start: &(usize, usize), visited: HashMap<(usize, usize), u32>) {
     let empty_vec: Vec<Direction> = vec![];
     let mut result: u32 = 0;
     for i in 0..map.len() {
         for j in 0..map[0].len() {
-            if map[i][j] || start == &(i, j) { continue; }
+            if map[i][j] || start == &(i, j) || !visited.contains_key(&(i,j))  { continue; }
             map[i][j] = true;
             let mut visited: HashMap<(usize, usize), Vec<Direction>> = HashMap::new();
             let mut guard = Guard {
