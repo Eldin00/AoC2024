@@ -103,6 +103,6 @@ fn part_2(lines: Vec<String>) { //gets wrong answer on real input, but works on 
             result += (i as u32 * drivemap[i].unwrap()) as u64;
         }
     }
-    println!{"{result}"};
+    println!{"{result} WRONG!"};
 }
 // result < 8705204127569
