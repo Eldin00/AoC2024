@@ -12,6 +12,7 @@ pub fn start() {
         let temp = l.unwrap();
         lines.push(temp);
     }
+    //lines = vec![String::from("1313165")];
     part_1(lines.clone());
     part_2(lines);
     println!("Time: {:?}", start.elapsed());
