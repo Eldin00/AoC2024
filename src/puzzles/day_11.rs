@@ -24,6 +24,7 @@ fn part_1(mut values: Vec<u64>) {
     part_2(values);
 }
 
+// Need to figure out a better algorithm for part 2. This should get the right answer, but would take over a month on my laptop as written.
 fn part_2(values: Vec<u64>) {
     let mut result: u64 = 0;
     let mut x = 0;
