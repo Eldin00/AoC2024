@@ -1,5 +1,4 @@
 use std::{
-    collections::{HashMap, HashSet},
     fs::File,
     io::{BufRead, BufReader},
 };
@@ -37,7 +36,7 @@ fn part_1(lines: Vec<Vec<u8>>) {
     );
 }
 
-fn part_2(lines: Vec<Vec<u8>>) {}
+fn part_2(_lines: Vec<Vec<u8>>) {}
 
 fn map_area(
     loc: (usize, usize),

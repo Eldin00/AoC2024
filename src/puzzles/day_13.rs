@@ -90,7 +90,7 @@ fn part_1(machines: &Vec<Machine>) {
 fn part_2(machines: &Vec<Machine>) {
     let mut result: u64 = 0;
     for m in machines {
-        let p = (m.prize.0 + 10000000000000, m.prize.1 + 10000000000000);
+        let _p = (m.prize.0 + 10000000000000, m.prize.1 + 10000000000000);
         //need to figure out algorithm to do this more efficiently.
     }
     println!("{result}");
