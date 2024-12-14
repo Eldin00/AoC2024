@@ -1,6 +1,6 @@
 use std::{
     fs::File,
-    io::{BufRead, BufReader}
+    io::{BufRead, BufReader},
 };
 
 pub fn start() {
@@ -19,7 +19,10 @@ pub fn start() {
 }
 
 fn part_1(lines: Vec<String>) {
-    let line: Vec<u8> = lines[0].chars().map(|c| c.to_string().parse::<u8>().unwrap()).collect();
+    let line: Vec<u8> = lines[0]
+        .chars()
+        .map(|c| c.to_string().parse::<u8>().unwrap())
+        .collect();
     let mut is_file: bool = true;
     let mut drivemap: Vec<Option<u32>> = vec![];
     let mut compacted: Vec<u32> = vec![];
@@ -30,8 +33,7 @@ fn part_1(lines: Vec<String>) {
             drivemap.append(a.as_mut());
             i += 1;
             is_file = false;
-        }
-        else {
+        } else {
             let mut a: Vec<Option<u32>> = vec![None; l as usize];
             drivemap.append(a.as_mut());
             is_file = true;
@@ -54,11 +56,15 @@ fn part_1(lines: Vec<String>) {
     for i in 0..compacted.len() {
         result += (i as u32 * compacted[i]) as u64;
     }
-    println!{"{result}"};
+    println! {"{result}"};
 }
 
-fn part_2(lines: Vec<String>) { //gets wrong answer on real input, but works on test input.
-    let line: Vec<u8> = lines[0].chars().map(|c| c.to_string().parse::<u8>().unwrap()).collect();
+fn part_2(lines: Vec<String>) {
+    //gets wrong answer on real input, but works on test input.
+    let line: Vec<u8> = lines[0]
+        .chars()
+        .map(|c| c.to_string().parse::<u8>().unwrap())
+        .collect();
     let mut is_file: bool = true;
     let mut drivemap: Vec<Option<u32>> = vec![];
     let mut gaps: Vec<(usize, usize)> = vec![];
@@ -71,8 +77,7 @@ fn part_2(lines: Vec<String>) { //gets wrong answer on real input, but works on 
             drivemap.append(a.as_mut());
             i += 1;
             is_file = false;
-        }
-        else {
+        } else {
             let mut a: Vec<Option<u32>> = vec![None; l as usize];
             gaps.push((drivemap.len(), l as usize));
             drivemap.append(a.as_mut());
@@ -81,8 +86,10 @@ fn part_2(lines: Vec<String>) { //gets wrong answer on real input, but works on 
     }
     while files.len() > 0 {
         let file = files.pop().unwrap();
-        for i in 0..gaps.len(){
-            if i >= file.0 {break;};
+        for i in 0..gaps.len() {
+            if i >= file.0 {
+                break;
+            };
             if gaps[i].1 >= file.1 {
                 for j in 0..file.1 {
                     drivemap[gaps[i].0 + j] = drivemap[file.0 + j];
@@ -104,6 +111,6 @@ fn part_2(lines: Vec<String>) { //gets wrong answer on real input, but works on 
             result += (i as u32 * drivemap[i].unwrap()) as u64;
         }
     }
-    println!{"{result} WRONG!"};
+    println! {"{result} WRONG!"};
 }
 // result < 8705204127569

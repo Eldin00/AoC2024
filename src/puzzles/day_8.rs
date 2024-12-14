@@ -1,7 +1,7 @@
 use std::{
     collections::{HashMap, HashSet},
     fs::File,
-    io::{BufRead, BufReader}
+    io::{BufRead, BufReader},
 };
 
 pub fn start() {
@@ -105,13 +105,17 @@ fn part_2(lines: Vec<String>) {
 fn vec_add(a: (usize, usize), b: (i32, i32), limit: (usize, usize)) -> Option<(usize, usize)> {
     let x = a.0 as i32 + b.0;
     let y = a.1 as i32 + b.1;
-    if x < 0 || x >= limit.0 as i32 || y < 0 || y >= limit.1 as i32 { return None; }
+    if x < 0 || x >= limit.0 as i32 || y < 0 || y >= limit.1 as i32 {
+        return None;
+    }
     Some((x as usize, y as usize))
 }
 
 fn vec_sub(a: (usize, usize), b: (i32, i32), limit: (usize, usize)) -> Option<(usize, usize)> {
     let x = a.0 as i32 - b.0;
     let y = a.1 as i32 - b.1;
-    if x < 0 || x >= limit.0 as i32 || y < 0 || y >= limit.1 as i32 { return None; }
+    if x < 0 || x >= limit.0 as i32 || y < 0 || y >= limit.1 as i32 {
+        return None;
+    }
     Some((x as usize, y as usize))
 }

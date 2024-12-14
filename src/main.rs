@@ -23,8 +23,11 @@ fn main() {
         puzzles::day_9::start();
         println!("Day 10 solutions:");
         puzzles::day_10::start();
-        }
-    println!("Day 11 solutions:");
-    puzzles::day_11::start();
-
+        println!("Day 11 solutions:");
+        puzzles::day_11::start();
+        println!("Day 12 solutions:");
+        puzzles::day_12::start();
+    }
+    println!("Day 13 solutions:");
+    puzzles::day_13::start();
 }

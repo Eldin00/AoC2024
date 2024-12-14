@@ -10,7 +10,10 @@ pub fn start() {
     let mut values: Vec<u64> = vec![];
     for l in reader.lines() {
         let temp = l.unwrap();
-        values = temp.split_whitespace().map(|c| c.parse::<u64>().unwrap()).collect();
+        values = temp
+            .split_whitespace()
+            .map(|c| c.parse::<u64>().unwrap())
+            .collect();
     }
     part_1(values.clone());
     println!("Time: {:?}", start.elapsed());
@@ -20,7 +23,7 @@ fn part_1(mut values: Vec<u64>) {
     for _ in 0..25 {
         values = blink(values);
     }
-    println!{"{}", values.len()};
+    println! {"{}", values.len()};
     part_2(values);
 }
 
@@ -33,7 +36,9 @@ fn part_2(values: Vec<u64>) {
         x += 1;
         let mut tmpvec: Vec<u64> = vec![n];
         for i in 0..50 {
-            if i % 10 == 0 {println!("at {i}");}
+            if i % 10 == 0 {
+                println!("at {i}");
+            }
             tmpvec = blink(tmpvec);
         }
         result += tmpvec.len() as u64;
@@ -49,17 +54,16 @@ fn blink(v: Vec<u64>) -> Vec<u64> {
         } else if count_digits(i) % 2 == 0 {
             let (a, b) = cleave(i);
             tmp.push(a);
-            tmp.push(b);             
-        }
-        else {
+            tmp.push(b);
+        } else {
             tmp.push(i * 2024);
         }
     }
     tmp
 }
 
-fn cleave(n: u64) -> (u64, u64){
-    let l = u64::pow(10,count_digits(n)/2);
+fn cleave(n: u64) -> (u64, u64) {
+    let l = u64::pow(10, count_digits(n) / 2);
     let a = n % l;
     let b = n / l;
     (a, b)

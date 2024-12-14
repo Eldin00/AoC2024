@@ -92,7 +92,7 @@ fn map_area(
         id: area_id,
         area,
         perimeter,
-        sides: 0
+        sides: 0,
     }
 }
 
@@ -100,5 +100,5 @@ struct Region {
     id: u32,
     area: u32,
     perimeter: u32,
-    sides: u32
+    sides: u32,
 }
