@@ -1,7 +1,7 @@
 use std::{
-    fs::File,
-    io::{BufRead, BufReader},
+    collections::HashMap, fs::File, io::{BufRead, BufReader}
 };
+use memoize::memoize;
 
 pub fn start() {
     let start = std::time::Instant::now();
@@ -16,51 +16,42 @@ pub fn start() {
             .collect();
     }
     part_1(values.clone());
+    part_2(values);
     println!("Time: {:?}", start.elapsed());
 }
 
-fn part_1(mut values: Vec<u64>) {
-    for _ in 0..25 {
-        values = blink(values);
+fn part_1(values: Vec<u64>) {
+    let mut result = 0_u64;
+    for v in values {
+        result += blink_memo(v, 25);
     }
-    println! {"{}", values.len()};
-    part_2(values);
+    println! {"{result}"};
 }
 
-// Need to figure out a better algorithm for part 2. This should get the right answer, but would take over a month on my laptop as written.
 fn part_2(values: Vec<u64>) {
-    let mut result: u64 = 0;
-    let mut x = 0;
-    for n in values {
-        println!("{x}");
-        x += 1;
-        let mut tmpvec: Vec<u64> = vec![n];
-        for i in 0..50 {
-            if i % 10 == 0 {
-                println!("at {i}");
-            }
-            tmpvec = blink(tmpvec);
-        }
-        result += tmpvec.len() as u64;
+    let mut result = 0_u64;
+    for v in values {
+        result += blink_memo(v, 75);
     }
-    println!("{}", result);
+    println! {"{result}"};
 }
 
-fn blink(v: Vec<u64>) -> Vec<u64> {
-    let mut tmp: Vec<u64> = vec![];
-    for i in v {
-        if i == 0 {
-            tmp.push(1);
-        } else if count_digits(i) % 2 == 0 {
-            let (a, b) = cleave(i);
-            tmp.push(a);
-            tmp.push(b);
-        } else {
-            tmp.push(i * 2024);
-        }
+#[memoize]
+fn blink_memo(v: u64, n: u8) -> u64 {
+    if n == 0 { return 1; }
+    let mut result = 0_u64;
+    if v == 0 {
+        result += blink_memo(1, n - 1);
+    } else if count_digits(v) % 2 == 0 {
+        let (a, b) = cleave(v);
+        result += blink_memo(a, n-1);
+        result += blink_memo(b, n-1);
+    } else {
+        result += blink_memo(v * 2024, n-1);
     }
-    tmp
+    result
 }
+
 
 fn cleave(n: u64) -> (u64, u64) {
     let l = u64::pow(10, count_digits(n) / 2);
