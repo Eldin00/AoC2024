@@ -1,7 +1,9 @@
-use std::{
-    collections::HashMap, fs::File, io::{BufRead, BufReader}
-};
 use memoize::memoize;
+use std::{
+    collections::HashMap,
+    fs::File,
+    io::{BufRead, BufReader},
+};
 
 pub fn start() {
     let start = std::time::Instant::now();
@@ -38,20 +40,21 @@ fn part_2(values: Vec<u64>) {
 
 #[memoize]
 fn blink_memo(v: u64, n: u8) -> u64 {
-    if n == 0 { return 1; }
+    if n == 0 {
+        return 1;
+    }
     let mut result = 0_u64;
     if v == 0 {
         result += blink_memo(1, n - 1);
     } else if count_digits(v) % 2 == 0 {
         let (a, b) = cleave(v);
-        result += blink_memo(a, n-1);
-        result += blink_memo(b, n-1);
+        result += blink_memo(a, n - 1);
+        result += blink_memo(b, n - 1);
     } else {
-        result += blink_memo(v * 2024, n-1);
+        result += blink_memo(v * 2024, n - 1);
     }
     result
 }
-
 
 fn cleave(n: u64) -> (u64, u64) {
     let l = u64::pow(10, count_digits(n) / 2);

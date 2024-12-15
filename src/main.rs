@@ -29,7 +29,9 @@ fn main() {
         puzzles::day_12::start();
         println!("Day 13 solutions:");
         puzzles::day_13::start();
-        }
-    println!("Day 14 solutions:");
-    puzzles::day_14::start();
+        println!("Day 14 solutions:");
+        puzzles::day_14::start();
+            }
+    println!("Day 15 solutions:");
+    puzzles::day_15::start();
 }

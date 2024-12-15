@@ -7,49 +7,43 @@ pub fn start() {
     let start = std::time::Instant::now();
     let file = File::open("./input/day_7.txt").unwrap();
     let reader = BufReader::new(file);
-    let mut lines: Vec<String> = vec![];
+    let mut lines: Vec<(u64, Vec<u64>)> = vec![];
     for l in reader.lines() {
         let temp = l.unwrap();
-        lines.push(temp);
-    }
-    part_1(lines.clone());
-    part_2(lines);
-    println!("Time: {:?}", start.elapsed());
-}
-
-fn part_1(lines: Vec<String>) {
-    let mut result: u64 = 0;
-    for l in lines {
-        let (t, v) = l.split_once(':').unwrap();
+        let (t, v) = temp.split_once(':').unwrap();
         let t = t.parse::<u64>().unwrap();
         let v: Vec<u64> = v
             .split_whitespace()
             .filter(|s| !s.is_empty())
             .map(|n| n.parse::<u64>().unwrap_or_default())
             .collect();
-        if try_add(v[0], v[1..].to_vec(), t) + try_mult(v[0], v[1..].to_vec(), t) > 0 {
-            result += t;
+
+        lines.push((t, v));
+    }
+    part_1(&lines);
+    part_2(&lines);
+    println!("Time: {:?}", start.elapsed());
+}
+
+fn part_1(lines: &Vec<(u64, Vec<u64>)>) {
+    let mut result: u64 = 0;
+    for l in lines {
+        if try_add(l.1[0], l.1[1..].to_vec(), l.0) + try_mult(l.1[0], l.1[1..].to_vec(), l.0) > 0 {
+            result += l.0;
         }
     }
     println!("{result}");
 }
 
-fn part_2(lines: Vec<String>) {
+fn part_2(lines: &Vec<(u64, Vec<u64>)>) {
     let mut result: u64 = 0;
     for l in lines {
-        let (t, v) = l.split_once(':').unwrap();
-        let t = t.parse::<u64>().unwrap();
-        let v: Vec<u64> = v
-            .split_whitespace()
-            .filter(|s| !s.is_empty())
-            .map(|n| n.parse::<u64>().unwrap_or_default())
-            .collect();
-        if try_add2(v[0], v[1..].to_vec(), t)
-            + try_mult2(v[0], v[1..].to_vec(), t)
-            + try_concat(v[0], v[1..].to_vec(), t)
+        if try_add2(l.1[0], l.1[1..].to_vec(), l.0)
+            + try_mult2(l.1[0], l.1[1..].to_vec(), l.0)
+            + try_concat(l.1[0], l.1[1..].to_vec(), l.0)
             > 0
         {
-            result += t;
+            result += l.0;
         }
     }
     println!("{result}");
