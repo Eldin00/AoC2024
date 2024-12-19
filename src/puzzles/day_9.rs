@@ -12,13 +12,12 @@ pub fn start() {
         let temp = l.unwrap();
         lines.push(temp);
     }
-    //lines = vec![String::from("1313165")];
-    part_1(lines.clone());
-    part_2(lines);
+    part_1(&lines);
+    part_2(&lines);
     println!("Time: {:?}", start.elapsed());
 }
 
-fn part_1(lines: Vec<String>) {
+fn part_1(lines: &Vec<String>) {
     let line: Vec<u8> = lines[0]
         .chars()
         .map(|c| c.to_string().parse::<u8>().unwrap())
@@ -59,8 +58,7 @@ fn part_1(lines: Vec<String>) {
     println! {"{result}"};
 }
 
-fn part_2(lines: Vec<String>) {
-    //gets wrong answer on real input, but works on test input.
+fn part_2(lines: &Vec<String>) {
     let line: Vec<u8> = lines[0]
         .chars()
         .map(|c| c.to_string().parse::<u8>().unwrap())
@@ -87,7 +85,7 @@ fn part_2(lines: Vec<String>) {
     while files.len() > 0 {
         let file = files.pop().unwrap();
         for i in 0..gaps.len() {
-            if i >= file.0 {
+            if gaps[i].0 >= file.0 {
                 break;
             };
             if gaps[i].1 >= file.1 {
@@ -111,6 +109,6 @@ fn part_2(lines: Vec<String>) {
             result += (i as u32 * drivemap[i].unwrap()) as u64;
         }
     }
-    println! {"{result} WRONG!"};
+    println! {"\n{result} WRONG!"};
 }
-// result < 8705204127569
+
