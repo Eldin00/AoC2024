@@ -44,7 +44,7 @@ fn part_1(drops: &Vec<(usize, usize)>, size: usize) {
             unvisited[i].push(((size * 2) - 2 - (j + i)) as u32);
         }
     }
-    for i in 0..=1024 {
+    for i in 0..1024 {
         map[drops[i].1][drops[i].0] = false;
     }
     while cell.loc != (size - 1, size - 1) {
@@ -60,7 +60,55 @@ fn part_1(drops: &Vec<(usize, usize)>, size: usize) {
 }
 
 fn part_2(drops: &Vec<(usize, usize)>, size: usize) {
- }
+    let mut map: Vec<Vec<bool>> = vec![vec![true; size]; size];
+    let mut unvisited: Vec<Vec<u32>> = vec![];
+    //locations.push(Reverse(cell));
+    for i in 0..size {
+        unvisited.push(vec![]);
+        for j in 0..size {
+            unvisited[i].push((j + i) as u32);
+        }
+    }
+    for i in 0..1024_usize{
+        map[drops[i].1][drops[i].0] = false;
+    }
+    for n in 1024..drops.len() {
+        let mut visited: Vec<Vec<u32>> = vec![vec![u32::MAX; size]; size];
+        let mut locations: BinaryHeap<Reverse<MapCell>> = BinaryHeap::new();
+        map[drops[n].1][drops[n].0] = false;
+        let mut cell = MapCell {
+            wdist: 0,
+            dist: 0,
+            loc: (size - 1, size - 1),
+        };
+        locations.push(Reverse(cell));
+        let mut flag = false;
+        while cell.loc != (0,0) {
+            if locations.is_empty() {
+                println!("{} - {:?}", n, drops[n]);
+                flag = true;
+                break
+            }
+            //println!("{n}, {:?}", cell.loc);
+            cell = step(
+                locations.pop().unwrap().0,
+                &map,
+                &mut visited,
+                &mut locations,
+                &unvisited
+            );
+            // for i in 0..map[0].len() {
+            //     for j in 0..map.len() {
+            //         if cell.loc == (i,j) { print!("@") }
+            //         else { print!("{}", match map[j][i] { true => '.', false => '#' }) }
+            //     }
+            //     println!();
+            // }
+            // println!("{n}");
+        }
+        if flag {break;}
+    }
+}
 
 #[derive(Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Debug)]
 struct MapCell {
