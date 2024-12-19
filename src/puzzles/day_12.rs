@@ -12,13 +12,11 @@ pub fn start() {
         let temp = l.unwrap();
         lines.push(temp.bytes().collect());
     }
-    part_1(lines.clone());
-    part_2(lines);
+    part_1(lines);
     println!("Time: {:?}", start.elapsed());
 }
 
 fn part_1(lines: Vec<Vec<u8>>) {
-    //let mut visited: HashSet<(usize, usize)> = HashSet::new();
     let mut areas: Vec<Vec<u32>> = vec![vec![0; lines.len()]; lines[0].len()];
     let mut regions: Vec<Region> = vec![];
     let mut area_id: u32 = 0;
@@ -34,9 +32,66 @@ fn part_1(lines: Vec<Vec<u8>>) {
         "{}",
         regions.iter().fold(0, |acc, x| acc + x.area * x.perimeter)
     );
+    part_2(areas, regions);
 }
 
-fn part_2(_lines: Vec<Vec<u8>>) {}
+fn part_2(areas: Vec<Vec<u32>>, mut regions: Vec<Region>) {
+    for x in 0..areas[0].len() {
+        for y in 0..areas.len() {
+            let i = regions.iter().position(|r| r.id == areas[y][x]).unwrap();
+            regions[i].sides += check_corner(&areas, (x, y));
+        }
+    }
+    println!(
+        "{}",
+        regions.iter().fold(0, |acc, x| acc + x.area * x.sides)
+    );
+}
+
+fn check_corner(areas: &Vec<Vec<u32>>, loc: (usize, usize)) -> u32 {
+    let mut result: u32 = 0;
+    if ((loc.1 == 0 || areas[loc.1 - 1][loc.0] != areas[loc.1][loc.0])
+        && (loc.0 == 0 || areas[loc.1][loc.0 - 1] != areas[loc.1][loc.0]))
+        || (loc.0 != 0
+            && loc.1 != 0
+            && areas[loc.1 - 1][loc.0] == areas[loc.1][loc.0]
+            && areas[loc.1][loc.0 - 1] == areas[loc.1][loc.0]
+            && areas[loc.1 - 1][loc.0 - 1] != areas[loc.1][loc.0])
+    {
+        result += 1;
+    }
+    if ((loc.1 == 0 || areas[loc.1 - 1][loc.0] != areas[loc.1][loc.0])
+        && (loc.0 == areas[0].len() - 1 || areas[loc.1][loc.0 + 1] != areas[loc.1][loc.0]))
+        || (loc.0 != areas[0].len() - 1
+            && loc.1 != 0
+            && areas[loc.1 - 1][loc.0] == areas[loc.1][loc.0]
+            && areas[loc.1][loc.0 + 1] == areas[loc.1][loc.0]
+            && areas[loc.1 - 1][loc.0 + 1] != areas[loc.1][loc.0])
+    {
+        result += 1;
+    }
+    if ((loc.1 == areas.len() - 1 || areas[loc.1 + 1][loc.0] != areas[loc.1][loc.0])
+        && (loc.0 == areas[0].len() - 1 || areas[loc.1][loc.0 + 1] != areas[loc.1][loc.0]))
+        || (loc.0 != areas[0].len() - 1
+            && loc.1 != areas.len() - 1
+            && areas[loc.1 + 1][loc.0] == areas[loc.1][loc.0]
+            && areas[loc.1][loc.0 + 1] == areas[loc.1][loc.0]
+            && areas[loc.1 + 1][loc.0 + 1] != areas[loc.1][loc.0])
+    {
+        result += 1;
+    }
+    if ((loc.1 == areas.len() - 1 || areas[loc.1 + 1][loc.0] != areas[loc.1][loc.0])
+        && (loc.0 == 0 || areas[loc.1][loc.0 - 1] != areas[loc.1][loc.0]))
+        || (loc.0 != 0
+            && loc.1 != areas.len() - 1
+            && areas[loc.1 + 1][loc.0] == areas[loc.1][loc.0]
+            && areas[loc.1][loc.0 - 1] == areas[loc.1][loc.0]
+            && areas[loc.1 + 1][loc.0 - 1] != areas[loc.1][loc.0])
+    {
+        result += 1;
+    }
+    return result;
+}
 
 fn map_area(
     loc: (usize, usize),
